@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private void createListview() {
 
         //setup array
-        String[] strTitle = new String[20];
+        final String[] strTitle = new String[20];
         strTitle[0] = "ห้ามเลี้ยวซ้าย";
         strTitle[1] = "ห้ามเลี้ยวขวา";
         strTitle[2] = "ตรงไป";
@@ -66,6 +67,17 @@ public class MainActivity extends AppCompatActivity {
 
         MyAdapter objMyAdapter = new MyAdapter(MainActivity.this, strTitle, intIcon);
         trafficListView.setAdapter(objMyAdapter);
+
+        trafficListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent objIntent = new Intent(MainActivity.this,DetailActivity.class);
+                objIntent.putExtra("Title", strTitle[position]);
+                objIntent.putExtra("Image", strTitle[position]);
+                objIntent.putExtra("Index", position);
+                startActivity(objIntent);
+            }
+        });
 
 
     }   //Create ListView
